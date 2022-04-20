@@ -11,6 +11,7 @@ Init:
 	STX $0017		;sets the first audio channel to a 3 kHz frequency
 	LDX #1			;loads 1 into register X (will signify a pure tone)
 	STX $0015		;sets the first audio channel to a pure tone
+	JMP StartTone		;starts tone
 
 Frame:
 	LDX #%00000010		;loads the data to be sent to the register X (D1 is high)
@@ -36,20 +37,20 @@ Frame:
 		STX $0002	;uses WSYNC to wait for the next start of the horizontal line
 	REPEND
 
-	DEY			;decrements frame counter
-	BEQ StartTone 		;if counter has 
-	CPY #15			;if counter reached 15
-	BCC StopTone
+	DEY			;decrements frame counter in Y register
+	BEQ StartTone 		;if counter has reached 0, start tone
+	CPY #15			;if counter reached 15 (half second)...
+	BCC StopTone		;...stop tone
 	JMP Frame		;restarts Frame loop
 
 StartTone:
 	LDY #8			;loads register Y with volume
 	STY $0019		;sets the volume on channel 1 from register Y
-	LDY #30			;starts frame countdown on register Y
+	LDY #30			;starts frame countdown on register Y (for 30 frames or 1 second)
 	JMP Frame
 
 StopTone:
-	LDX #0			;sets volume 0 to index X
+	LDX #0			;sets volume 0 to register X
 	STX $0019		;sets volume in channel 0 to value in X (0)
 	JMP Frame
 
