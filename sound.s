@@ -40,7 +40,7 @@ Frame:
 	DEY			;decrements frame counter in Y register
 	BEQ StartTone 		;if counter has reached 0, start tone
 	CPY #15			;if counter reached 15 (half second)...
-	BCC StopTone		;...stop tone
+	BEQ StopTone		;...stop tone
 	JMP Frame		;restarts Frame loop
 
 StartTone:
