@@ -1,0 +1,5 @@
+set(CMAKE_SYSTEM_NAME Generic) #no operating system in target platform
+set(CMAKE_ASM_COMPILER dasm)
+set(CMAKE_ASM_FLAGS "-v5 -f3 -R")
+set(CMAKE_ASM_COMPILE_OBJECT "${CMAKE_COMMAND} -E copy <SOURCE> <OBJECT>")
+set(CMAKE_ASM_LINK_EXECUTABLE "<CMAKE_ASM_COMPILER> <OBJECTS> <FLAGS> -o<TARGET>.bin")
