@@ -32,7 +32,7 @@ WaitForHorizontalPosition:
 
 DrawingWindow:
 	LDA #0													;clears accumulator
-	CPX	#20													;check to see if we can start drawing sprite
+	CPX	#20													;check to see if we can start drawing sprite (scanline 192-20=172)
 	BCS	EndDrawingWindow						;not drawing sprite yet
 	CPY #0													;check to see if we're done drawing sprite
 	BMI EndDrawingWindow						;done drawing sprite
@@ -56,17 +56,17 @@ EndDrawingWindow:
 
 ;Start sprite data
 EnterpriseShape:									;writing sprite in reverse scanline order, to avoid comparison cycles
-	.byte %01000010									;all $96
-	.byte %01111110									;bit 1 and 6: $04, the rest $08
-	.byte %01011010									;bit 1 and 6: $42, bit 3 and 4: $08
-	.byte %00011000									;all $08
-	.byte %00011000									;all $08
-	.byte %01111110									;all these pixels should be $08
-	.byte %11111111									;all these pixels should be $08
-	.byte %11111111									;same as above, can probably just hole for 2 lines instead of wasting the byte in rom?
-	.byte %11111111									;most pixels should be $08, except for middle 2 (bits 3 and 4) which should be $04
-	.byte %01111110									;these should also be $08
-	.byte %00111100									;all these pixels should be $08
+	.byte %01000010
+	.byte %01111110
+	.byte %01011010
+	.byte %00011000
+	.byte %00011000
+	.byte %01111110
+	.byte %11111111
+	.byte %11111111
+	.byte %11111111
+	.byte %01111110
+	.byte %00111100
 	
 EnterpriseColor:
 	.byte $96												;red
